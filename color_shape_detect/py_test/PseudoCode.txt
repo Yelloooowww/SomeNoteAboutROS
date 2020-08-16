@@ -1,16 +1,16 @@
 maskColorAndShape():
 	blurred_image＝讀進的圖片經過模糊處理
 	hsv=模糊處理後的圖片進行空間轉換（BGR->HSV）
-  mask=遮罩 位於指定顏色區域間的值置為255，位於區間外的值置為0
+        mask=遮罩 位於指定顏色區域間的值置為255，位於區間外的值置為0
 	mask_result=經過遮罩 把不要的範圍塗黑之結果
 
 	找出所有圖形
-    for contour in 所有圖形:
+        for contour in 所有圖形:
 		計算圖形的moment
 		計算圖形面積
 		if 面積夠大 且 某個等等放在分母的參數不為零:
 			取得Contour中心點
-      以中心點的顏色定為這個contour的顏色
+                        以中心點的顏色定為這個contour的顏色
 
 			計算周長
 			對contour做多邊形逼近（可以想成是用粗一點的線來描邊, 來忽略掉細微的毛邊或雜點）
@@ -19,6 +19,6 @@ maskColorAndShape():
 			if color in {Blue,Red,Yellow,Green}:
 				if 這個形狀/顏色的圖片 需要出現:
 					劃上輪廓
-          加上文字
+                                        加上文字
 				else:
 					塗成黑色
