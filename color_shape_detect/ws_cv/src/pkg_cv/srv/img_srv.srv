@@ -1,0 +1,5 @@
+string color
+int64 point
+int64 on_off
+---
+int64 response

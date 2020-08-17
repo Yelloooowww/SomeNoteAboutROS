@@ -1,0 +1,2 @@
+pkg_cv
+-DCATKIN_DEVEL_PREFIX=/home/yellow/ws_cv/devel -DCMAKE_INSTALL_PREFIX=/home/yellow/ws_cv/install -G Unix Makefiles

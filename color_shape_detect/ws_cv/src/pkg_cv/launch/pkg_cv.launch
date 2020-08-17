@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<launch>
+	<node pkg="pkg_cv" name="camera_pub" type="camera_pub.py" />
+	<node pkg="pkg_cv" name="ColorShapeDetect" type="ColorShapeDetect.py" /> 
+</launch>
