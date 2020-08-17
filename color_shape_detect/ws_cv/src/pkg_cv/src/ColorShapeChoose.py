@@ -9,7 +9,8 @@ def dosomething(x,y,z):
     rospy.wait_for_service('img_service')
     try:
         get_srv = rospy.ServiceProxy('img_service',img_srv)
-        get_srv(x,y,z)
+        r=get_srv(x,y,z)
+        print('return value=',r)
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
@@ -22,6 +23,6 @@ if __name__ == "__main__":
         y = int(sys.argv[2])
         z = int(sys.argv[3])
     else:
-        print(usage(),'?????????????')
+        print(usage(),'too much/few argv')
         sys.exit(1)
     dosomething(x,y,z)
