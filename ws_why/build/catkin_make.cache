@@ -1,2 +1,0 @@
-pkg_why
--DCATKIN_DEVEL_PREFIX=/home/yellow/ws_why/devel -DCMAKE_INSTALL_PREFIX=/home/yellow/ws_why/install -G Unix Makefiles

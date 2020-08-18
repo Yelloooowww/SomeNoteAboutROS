@@ -1,2 +1,0 @@
-pkg_testservice
--DCATKIN_DEVEL_PREFIX=/home/yellow/ws_testservice/devel -DCMAKE_INSTALL_PREFIX=/home/yellow/ws_testservice/install -G Unix Makefiles
