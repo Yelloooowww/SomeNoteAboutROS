@@ -13,7 +13,7 @@ color_node=0
 color_have_searched=-0.5
 color_search=-1
 color_obstacle=-5
-
+speed=0.01
 
 class node:
 	def __init__(self,x,y):
@@ -28,7 +28,7 @@ class node:
 class Astar_animation():
 	def __init__(self,map):
 		self.map_size=np.shape(map)
-		print(self.map_size)
+		print('map_size=',self.map_size)
 		self.clicktime=0
 		self.start=None
 		self.end=None
@@ -70,6 +70,7 @@ class Astar_animation():
 			frame=self.data_animation[-1]
 			frame[self.end.x][self.end.y]=color_end
 			self.run_astar()
+		else:exit()
 
 
 	def run_astar(self):
@@ -123,10 +124,12 @@ class Astar_animation():
 
 
 	def play(self):
+		print('Frames=',len(self.data_animation))
 		for i in range(len(self.data_animation)):
 			self.psm=self.axs.imshow(self.data_animation[i],cmap='bone')
 			self.axs.set_title("frame {}".format(i))
-			plt.pause(0.1) # Note that using time.sleep does *not* work here!
+			plt.pause(speed) # Note that using time.sleep does *not* work here!
+		print('END')
 		plt.show()
 
 map=[
@@ -145,11 +148,11 @@ map=[
 	[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	# [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	# [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	# [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	# [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	# [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ]
 
 Astar_animation(map)
