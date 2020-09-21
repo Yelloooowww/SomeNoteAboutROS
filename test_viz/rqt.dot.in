@@ -5,13 +5,13 @@ digraph D {
 	edge [penwidth=1.5]
 	node [penwidth=2.0]
 
-	subgraph cluster_Camara{
-		label = "Camara";
+	subgraph cluster_Sensor{
+		label = "Sensor";
 
-		depth_topic[!TOPIC!, label="camera/aligned_depth_to_color/image_raw \n(sensor_msgs/Image.msg)"];
-		color_topic[!TOPIC!, label="camera/color/image_raw \n(sensor_msgs/Image.msg)"];
-		depth_registered_topic[!TOPIC!, label="camera/depth_registered/points \n(sensor_msgs/PointCloud2Const.msg)"];
-		camera_info_topic[!TOPIC!, label="camera/color/camera_info \n(sensor_msgs/CameraInfo.msg)"];
+		depth_topic[!TOPIC!, label="/husky1/camera/aligned_depth_to_color/image_raw \n(sensor_msgs/Image.msg)"];
+		color_topic[!TOPIC!, label="/husky1/camera/color/image_raw \n(sensor_msgs/Image.msg)"];
+		depth_registered_topic[!TOPIC!, label="/husky1/velodyne1/velodyne_points \n(sensor_msgs/PointCloud2Const.msg)"];
+		camera_info_topic[!TOPIC!, label="/husky1/camera/color/camera_info \n(sensor_msgs/CameraInfo.msg)"];
 	}
 
 
@@ -22,10 +22,10 @@ digraph D {
 		bb_ssd_mobile_lite_node[!NODE:compiled!, label="bb_ssd_mobile_lite.py"];
 		pub_arti_pose_node[!NODE:compiled!, label="pub_arti_pose_ssd.cpp"];
 
-		predict_img_topic[!TOPIC!, label="camera/predict_img \n(sensor_msgs/Image.msg)"];
+		predict_img_topic[!TOPIC!, label="/husky1/camera/predict_img \n(sensor_msgs/Image.msg)"];
 		BoundingBoxes_topic[!TOPIC!, label="BoundingBoxes \n(subt_msgs/msg/BoundingBoxes.msg)"];
 		artifact_pose_topic[!TOPIC!, label="artifact_pose \n(subt_msgs/msg/ArtifactPoseArray.msg)"];
-		move_base_simple_goal_topic[!TOPIC!, label="move_base_simple/goal \n(subt_msgs/msg/ArtifactPoseArray.msg)"];
+
 	}
 
 	subgraph cluster_Create_map{
@@ -55,6 +55,7 @@ digraph D {
 		pid_control_goal_topic[!TOPIC!, label="pid_control/goal \n(geometry_msgs/msg/PoseStamped.msg)"];
 		goal_maker_topic[!TOPIC!, label="goal_maker \n(visualization_msgs/msg/Marker.msg)"];
 		target_maker_topic[!TOPIC!, label="target_maker \n(visualization_msgs/msg/Marker.msg)"];
+		move_base_simple_goal_topic[!TOPIC!, label="move_base_simple/goal \n(geometry_msgs/msg/PoseStamped.msg)"];
 	}
 
 	subgraph cluster_control{
@@ -66,13 +67,13 @@ digraph D {
 	subgraph cluster_Odometry{
 		label = "Odometry";
 
-		odom_topic[!TOPIC!, label="odom \n(nav_msgs/msg/Odometry.msg)"];
+		odom_topic[!TOPIC!, label="/husky1/husky_velocity_controller/odom \n(nav_msgs/msg/Odometry.msg)"];
 	}
 
 	subgraph cluster_Actuators{
 		label = "Actuators";
 
-		vel_topic[!TOPIC!, label="track_vel \n(geometry_msgs/msg/Twist.msg)"];
+		vel_topic[!TOPIC!, label="/husky1/track_vel \n(geometry_msgs/msg/Twist.msg)"];
 	}
 
 
