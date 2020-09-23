@@ -1,0 +1,2 @@
+set(subt_msgs_MESSAGE_FILES "msg/BoundingBox.msg;msg/BoundingBoxes.msg;msg/bb_input.msg;msg/arti_input.msg;msg/mask_center.msg;msg/masks.msg;msg/ArtifactPose.msg;msg/ArtifactPoseArray.msg;msg/AnchorBallDetection.msg;msg/SubTInfo.msg;msg/GloraPack.msg")
+set(subt_msgs_SERVICE_FILES "srv/int8.srv;srv/int32.srv;srv/pause.srv;srv/node_stat.srv;srv/start.srv;srv/stop.srv;srv/status.srv;srv/pose.srv;srv/ultra_info.srv;srv/frame_switch.srv;srv/report.srv;srv/artifact.srv")

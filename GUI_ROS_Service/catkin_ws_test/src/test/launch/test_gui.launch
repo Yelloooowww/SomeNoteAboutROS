@@ -3,5 +3,10 @@
 <launch>
     <node pkg="test" type="camera_pub.py" name="camera_pub" output="screen" />
     <node pkg="test" type="nctu_gui" name="test" output="screen" />
-    <node pkg="test" type="server.py" name="server" output="screen" />
+    <!-- <node pkg="test" type="server.py" name="server" output="screen" /> -->
+    <!-- <node pkg="test" type="c_server" name="c_server" output="screen" /> -->
+    <node pkg="test" type="py_server.py" name="py_server" output="screen" />
 </launch>
+
+
+<!-- roslaunch realsense2_camera rs_camera.launch align_depth:=true -->

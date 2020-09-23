@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   image_transport
   cv_bridge
+  subt_msgs
 )
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(Qt5Widgets)   # Qt Environment
@@ -27,7 +28,7 @@ set(CMAKE_AUTORCC ON)
 catkin_package(
 #  INCLUDE_DIRS include
   LIBRARIES nctu_gui
-  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs subt_msgs
 #  DEPENDS system_lib
 )
 
@@ -51,3 +52,8 @@ install(TARGETS nctu_gui
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
 )
+
+
+add_executable(c_server src/c_server.cpp)
+target_link_libraries(c_server ${catkin_LIBRARIES})
+add_dependencies(c_server src/c_server.cpp ${catkin_EXPORTED_TARGETS})

@@ -22,7 +22,8 @@ Mainwindow::Mainwindow(QWidget *parent) :
   }
 
   // sub_cam = new sub_thread(parent, nh, this, "/husky2/camera_middle/color/image_raw", 0);
-  sub_cam = new sub_thread(parent, nh, this, "/img_input", 0);
+  sub_cam = new sub_thread(parent, nh, this, "/camera/color/image_raw", 0);
+  // sub_cam = new sub_thread(parent, nh, this, "img_input", 0);
   sub_cam->start();
 
   connect(this, SIGNAL(set_image_sig(int)), SLOT(set_image(int)));
@@ -74,8 +75,8 @@ void Mainwindow::mouseDoubleClickEvent(QMouseEvent *e)
   // qDebug() << e->x() << ":" << e->y();
   // qDebug() << "雙擊";
 
-  srv.request.a  = e->x() ;
-  srv.request.b  = e->y() ;
+  srv.request.a  = e->x()-13 ;
+  srv.request.b  = e->y()-13 ;
   if (h1.call(srv)){
     // qDebug() << "call success";
     ROS_INFO("call success");
@@ -89,7 +90,8 @@ void Mainwindow::mouseDoubleClickEvent(QMouseEvent *e)
 
 void Mainwindow::mouseMoveEvent(QMouseEvent *e)
 {
-  qDebug() << "move" << e->x() << ":" << e->y();
+  // qDebug() << "move" << e->x() << ":" << e->y();
+  ;
 }
 
 void Mainwindow::on_pushButton_2_clicked()
