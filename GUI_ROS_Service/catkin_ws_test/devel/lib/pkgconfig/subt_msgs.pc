@@ -1,8 +1,0 @@
-prefix=/home/yellow/catkin_ws_test/devel
-
-Name: subt_msgs
-Description: Description of subt_msgs
-Version: 1.1.4
-Cflags: -I/home/yellow/catkin_ws_test/devel/include
-Libs: -L${prefix}/lib 
-Requires: geometry_msgs sensor_msgs message_runtime std_msgs

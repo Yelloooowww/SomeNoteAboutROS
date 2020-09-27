@@ -1,2 +1,0 @@
-subt_msgs:test:vision_opencv/cv_bridge:vision_opencv/image_geometry:vision_opencv/opencv_tests:vision_opencv/vision_opencv
--DCATKIN_DEVEL_PREFIX=/home/yellow/catkin_ws_test/devel -DCMAKE_INSTALL_PREFIX=/home/yellow/catkin_ws_test/install -G Unix Makefiles
