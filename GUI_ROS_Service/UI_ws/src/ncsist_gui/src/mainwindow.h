@@ -21,7 +21,6 @@
 #include <vector>
 
 #include <ros/ros.h>
-#include <std_msgs/Int32.h>
 #include "sub_thread.h"
 #include "sub_artimap.h"
 #include "roscpp_tutorials/TwoInts.h"
@@ -29,6 +28,9 @@
 #include "subt_msgs/ArtifactPose.h"
 #include "subt_msgs/ArtifactPoseArray.h"
 #include "subt_msgs/int8.h"
+#include <std_msgs/Int32.h>
+#include "std_msgs/String.h"
+#include "std_msgs/Int16MultiArray.h"
 
 using namespace std;
 using namespace ros;
@@ -58,6 +60,9 @@ private slots:
     void on_pushButton_up_pressed();
     void on_pushButton_right_pressed();
     void on_pushButton_down_pressed();
+    void on_radioButton_auto_toggled(bool checked);
+    void on_radioButton_manual_toggled(bool checked);
+    void on_radioButton_back_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -65,8 +70,10 @@ private:
     sub_thread *sub_cam;
     sub_artimap *sub_arti;
     sub_artimap *sub_arti_cmd_vel;
-    ServiceClient h1;
-    ServiceClient h2;
+    // ServiceClient h1_pose;
+    Publisher h1_pose;
+    Publisher h3_FSMstate;
+    Publisher h2_cmd_vel;
 
 signals:
   void set_image_sig(int);

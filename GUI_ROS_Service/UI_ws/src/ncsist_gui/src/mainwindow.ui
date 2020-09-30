@@ -37,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>20</y>
+      <y>70</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -50,52 +50,13 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>60</y>
+      <y>110</y>
       <width>112</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Manual</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_start">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>110</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_pause">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>150</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pause</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_back">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>190</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Back</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_up">
@@ -168,6 +129,19 @@
       <width>201</width>
       <height>251</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_back">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>150</y>
+      <width>112</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
     </property>
    </widget>
   </widget>

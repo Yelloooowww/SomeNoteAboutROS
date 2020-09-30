@@ -1,2 +1,0 @@
-ncsist_gui:subt_msgs:vision_opencv/cv_bridge:vision_opencv/image_geometry:vision_opencv/opencv_tests:vision_opencv/vision_opencv
--DCATKIN_DEVEL_PREFIX=/home/yellow/UI_ws/devel -DCMAKE_INSTALL_PREFIX=/home/yellow/UI_ws/install -G Unix Makefiles

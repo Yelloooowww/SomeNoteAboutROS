@@ -4,6 +4,8 @@
   <node pkg="ncsist_gui" type="ncsist_gui" name="ncsist_gui" output="screen">
   </node>
 
+  <!-- <node pkg="ncsist_gui" type="pub.py" name="pub" output="screen"></node> -->
+
   <node pkg="ncsist_gui" type="ui_server.py" name="ui_server" output="screen">
     <!-- <remap from="camera/color/image_raw" to="/husky1/camera_middle/color/image_raw"/>
     <remap from="camera/aligned_depth_to_color/image_raw" to="/husky1/camera_middle/aligned_depth_to_color/image_raw"/>

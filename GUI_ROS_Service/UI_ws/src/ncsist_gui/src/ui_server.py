@@ -16,6 +16,8 @@ from rospy_tutorials.srv import *
 from subt_msgs.srv import int8
 from subt_msgs.msg import ArtifactPoseArray
 from subt_msgs.msg import ArtifactPose
+from std_msgs.msg import String
+from std_msgs.msg import Int16MultiArray
 
 class GUI_server():
 	def __init__(self):
@@ -36,13 +38,12 @@ class GUI_server():
 		ts1 = message_filters.ApproximateTimeSynchronizer([image_sub1, depth_sub1], 10, slop=0.1)
 		ts1.registerCallback(self.img_cb)
 
-		self.pub = rospy.Publisher("artifact_pose", ArtifactPoseArray, queue_size = 1)
+		self.pub_artifact_pose = rospy.Publisher("artifact_pose", ArtifactPoseArray, queue_size = 1)
 		self.pub_cmd_vel = rospy.Publisher("cmd_vel", Twist, queue_size = 1)
-		# self.pub_movegoal = rospy.Publisher("/move_base_simple/goal", PoseStamped, queue_size = 1)
 
-		##serverice
-		self.gui_server = rospy.Service('ui_position_service', AddTwoInts, self.gui_server_callback)
-		self.gui_server_cmd_vel = rospy.Service("manual_cmd_vel", int8, self.gui_server_cmd_vel_callback)
+		#Subscriber
+		rospy.Subscriber("ui_position", Int16MultiArray, self.ui_position_callback)
+		rospy.Subscriber("ui_manual_cmd_vel", String, self.gui_server_cmd_vel_callback)
 
 
 		self.movegoal=PoseStamped()
@@ -57,9 +58,10 @@ class GUI_server():
 		self.gui_y= -1
 		rospy.loginfo("init done")
 
-	def gui_server_cmd_vel_callback(self,req):
+
+	def gui_server_cmd_vel_callback(self,msg):
 		vel_msg = Twist()
-		if req.data==1:
+		if msg.data=="up":
 			rospy.logwarn("I heard turn up")
 			vel_msg.linear.x=1
 			vel_msg.linear.y=1
@@ -67,7 +69,7 @@ class GUI_server():
 			vel_msg.angular.x = 1
 			vel_msg.angular.y = 1
 			vel_msg.angular.z = 1
-		elif req.data==2:
+		elif msg.data=="down":
 			rospy.logwarn("I heard turn down")
 			vel_msg.linear.x=2
 			vel_msg.linear.y=2
@@ -75,7 +77,7 @@ class GUI_server():
 			vel_msg.angular.x = 2
 			vel_msg.angular.y = 2
 			vel_msg.angular.z = 2
-		elif req.data==3:
+		elif msg.data=="left":
 			rospy.logwarn("I heard turn left")
 			vel_msg.linear.x=3
 			vel_msg.linear.y=3
@@ -83,7 +85,7 @@ class GUI_server():
 			vel_msg.angular.x = 3
 			vel_msg.angular.y = 3
 			vel_msg.angular.z = 3
-		elif req.data==4:
+		elif msg.data=="right":
 			rospy.logwarn("I heard turn right")
 			vel_msg.linear.x=4
 			vel_msg.linear.y=4
@@ -93,26 +95,24 @@ class GUI_server():
 			vel_msg.angular.z = 4
 
 		self.pub_cmd_vel.publish(vel_msg)
-		return 
+		return
 
-	def gui_server_callback(self,req):
-		self.gui_x= req.a
-		self.gui_y= req.b
-		rospy.logwarn("I heard gui_x=%s  gui_y=%s", req.a,req.b)
-		self.pub.publish(self.obj_pose_arr)
+
+	def ui_position_callback(self,msg):
+		self.gui_x= msg.data[0]
+		self.gui_y= msg.data[1]
+		rospy.logwarn("I heard gui_x=%s  gui_y=%s", msg.data[0],msg.data[1])
+		self.pub_artifact_pose.publish(self.obj_pose_arr)
 		rospy.logwarn("PUB")
-
-		return 1
+		return
 
 	def img_cb(self, rgb_msg, depth_msg):
 
 		cv_image = self.cv_bridge.imgmsg_to_cv2(rgb_msg, "bgr8")
 		cv_depth = self.cv_bridge.imgmsg_to_cv2(depth_msg, "16UC1")
 
-
 		zc = cv_depth[self.gui_y, self.gui_x]
-
-		zc = float(zc)/1000. # SR300 is a bit weird
+		zc = float(zc)/1000. # 1000. for D435
 		rx, ry, rz = self.getXYZ(self.gui_x /1.0 , self.gui_y, zc/1.0 )
 		self.obj_pose.pose.position.x=rx
 		self.obj_pose.pose.position.y=ry
