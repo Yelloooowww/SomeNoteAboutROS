@@ -1,0 +1,105 @@
+digraph D {
+	fontname="sans";
+
+	penwidth="2.0"
+	edge [penwidth=1.5]
+	node [penwidth=2.0]
+
+	subgraph cluster_Sensor{
+		label = "Sensor";
+
+		depth_topic[!TOPIC!, label="/camera/aligned_depth_to_color/image_raw \n(sensor_msgs/Image.msg)"];
+		color_topic[!TOPIC!, label="/camera/color/image_raw \n(sensor_msgs/Image.msg)"];
+		depth_registered_topic[!TOPIC!, label="/camera/depth_registered/points \n(sensor_msgs/PointCloud2Const.msg)"];
+		camera_info_topic[!TOPIC!, label="camera/color/camera_info \n(sensor_msgs/CameraInfo.msg)"];
+	}
+
+
+
+	subgraph cluster_find_goal_point {
+		label = "Find_goal_point";
+
+		bb_ssd_mobile_lite_node[!NODE:compiled!, label="bb_ssd_mobile_lite.py"];
+		pub_arti_pose_node[!NODE:compiled!, label="pub_arti_pose_ssd.cpp"];
+
+		predict_img_topic[!TOPIC!, label="camera/predict_img/ \n(sensor_msgs/Image.msg)"];
+		BoundingBoxes_topic[!TOPIC!, label="BoundingBoxes \n(subt_msgs/msg/BoundingBoxes.msg)"];
+		artifact_pose_topic[!TOPIC!, label="artifact_pose \n(subt_msgs/msg/ArtifactPoseArray.msg)"];
+
+	}
+
+	subgraph cluster_Create_map{
+		label = "Create_map";
+
+		pc2grid_node[!NODE:compiled!, label="pc2grid.cpp"];
+
+		transform_d435_pc_topic[!TOPIC!, label="transform_d435_pc \n(sensor_msgs/PointCloud2.msg)"];
+		depthcam_map_topic[!TOPIC!, label="depthcam_map \n(nav_msgs/OccupancyGrid.msg)"];
+	}
+
+	subgraph cluster_path_plan{
+		label = "Path_plan";
+
+		path_plan_node[!NODE:compiled!, label="path_plan.cpp"];
+
+		astar_path_topic[!TOPIC!, label="astar_path \n(nav_msgs/Path.msg)"];
+
+		plan_service[!CONFIG!, label="plan_service \n(nav_msgs/srv/GetPlan.srv)"];
+	}
+
+	subgraph cluster_tracking{
+		label = "Track";
+
+		track_node[!NODE:compiled!, label="tracking.py"];
+
+		pid_control_goal_topic[!TOPIC!, label="pid_control/goal \n(geometry_msgs/msg/PoseStamped.msg)"];
+		goal_maker_topic[!TOPIC!, label="goal_maker \n(visualization_msgs/msg/Marker.msg)"];
+		target_maker_topic[!TOPIC!, label="target_maker \n(visualization_msgs/msg/Marker.msg)"];
+		move_base_simple_goal_topic[!TOPIC!, label="move_base_simple/goal \n(geometry_msgs/msg/PoseStamped.msg)"];
+	}
+
+	subgraph cluster_control{
+		label = "Control";
+
+		control_node[!NODE:compiled!, label="pid_control.py"];
+	}
+
+	subgraph cluster_Odometry{
+		label = "Odometry";
+
+		odom_topic[!TOPIC!, label="/odom \n(nav_msgs/msg/Odometry.msg)"];
+	}
+
+	subgraph cluster_Actuators{
+		label = "Actuators";
+
+		vel_topic[!TOPIC!, label="/track_vel \n(geometry_msgs/msg/Twist.msg)"];
+	}
+
+
+
+
+	{depth_topic,color_topic} -> bb_ssd_mobile_lite_node
+
+	bb_ssd_mobile_lite_node -> {predict_img_topic,BoundingBoxes_topic}
+
+	{BoundingBoxes_topic,camera_info_topic} -> pub_arti_pose_node
+
+	pub_arti_pose_node -> artifact_pose_topic
+
+	{artifact_pose_topic,move_base_simple_goal_topic,plan_service} -> track_node
+
+	track_node -> {pid_control_goal_topic,goal_maker_topic,target_maker_topic}
+
+	{pid_control_goal_topic,odom_topic} -> control_node
+	control_node -> vel_topic
+
+	depth_registered_topic -> pc2grid_node
+	pc2grid_node -> {transform_d435_pc_topic,depthcam_map_topic}
+	{depthcam_map_topic,plan_service} -> path_plan_node
+	path_plan_node -> {astar_path_topic}
+
+	{path_plan_node,track_node} -> plan_service
+
+
+}
